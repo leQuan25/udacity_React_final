@@ -1,0 +1,23 @@
+ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Hide overflowing content */
+}
+
+li.navitem {
+    display: inline-block; /* Display items inline */
+}
+
+li.navitem a {
+    display: block;
+    color: black; /* Text color for navigation links */
+    text-align: center;
+    padding: 14px 16px; /* Padding for spacing */
+    text-decoration: none; /* Remove underlines from links */
+}
+
+/* Float the right-aligned list to the right */
+ul.navbar-right {
+    float: right;
+}
