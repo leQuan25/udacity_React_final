@@ -1,5 +1,5 @@
 import {Fragment } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Login from "../component/Login";
 import HomePage from "../component/HomePage";
 import NewPoll from "../component/PollCreation"
@@ -15,10 +15,10 @@ const App = (props) => {
         <div className="container">
             <Routes>
                 <Route path="/" exact element={<Login />} />
-                <Route path="/home" exact element={ props.loading === true ?  <Navigate to ="/" /> :  <HomePage />}  />
-                <Route path="/new" element={props.loading === true ?  <Navigate to ="/" /> : <NewPoll />}  />
-                <Route path="/poll/:id" element={<Poll />}  />
-                <Route path="/leaderboard" element={props.loading === true ?  <Navigate to ="/" /> : <Leaderboard />}  />
+                <Route path="/home" exact element={<RequireAuth props={props}> <HomePage /> </RequireAuth>} />
+                <Route path="/new" element={<RequireAuth props={props}><NewPoll /></RequireAuth>}  />
+                <Route path="/poll/:id" element={<RequireAuth props={props}><Poll /></RequireAuth>}  />
+                <Route path="/leaderboard" element={<RequireAuth props={props}><Leaderboard /></RequireAuth>} />
                 <Route path="/404" element={<PageNotFound />} />
                 <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
@@ -27,8 +27,19 @@ const App = (props) => {
     );
   };
 
+  function RequireAuth({ children, props }) {
+    const authed  = props.loading;
+    const location = useLocation();
+  
+    return authed === true ? (
+      children
+    ) : (
+      <Navigate to="/" replace state={{ path: location.pathname }} />
+    );
+  } 
+
   const mapStateToProps = ({ authedUser }) => ({
-    loading: authedUser === null,
+    loading: authedUser !== null,
   });
 
   export default connect(mapStateToProps)(App);

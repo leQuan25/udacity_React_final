@@ -3,13 +3,14 @@ import { handleInitialData } from "../actions/shared"
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import loginImage from "../images/Login.png"
 
 const Login = (props) => {
     const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     const [passWord, setPassWord] = useState("");
+    const { state } = useLocation();
   
     useEffect(() => {
         props.dispatch(handleInitialData());
@@ -39,7 +40,7 @@ const Login = (props) => {
         e.preventDefault();        
         if (handleLogin(userName, passWord, props.userList)) {
             props.dispatch(setAuthedUser(userName));
-            navigate("/home");
+            navigate(state?.path || "/home");
         } else {
             alert("Wrong user or password");
         }
