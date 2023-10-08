@@ -28,8 +28,8 @@ const Login = (props) => {
       };
    
       function handleLogin(userName, password, userList){
-        for (const key in userList.users) {
-            if (userList.users[key].id === userName && userList.users[key].password === password) {
+        for (const key in userList) {
+            if (userList[key].id === userName && userList[key].password === password) {
                 return true;
             }
         }
@@ -38,7 +38,7 @@ const Login = (props) => {
 
       const handleSubmit = (e) => {
         e.preventDefault();        
-        if (handleLogin(userName, passWord, props.userList)) {
+        if (handleLogin(userName, passWord, props.users)) {
             props.dispatch(setAuthedUser(userName));
             navigate(state?.path || "/home");
         } else {
@@ -87,7 +87,7 @@ const Login = (props) => {
 
 function mapStateToProps(state) {
     const { users } = state;
-    return { userList: users }
+    return { users }
 } 
 
 export default connect(mapStateToProps)(Login);

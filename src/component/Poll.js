@@ -1,21 +1,19 @@
 import { connect } from "react-redux";
 import { useParams, Navigate } from "react-router-dom";
 import {Fragment } from "react";
-import {handleToggleQuestion} from "../actions/questions"
+import {handleToggleQuestion} from "../actions/shared"
 import Nav from "./Nav";
-import { useNavigate } from "react-router-dom";
 
 const Poll = (props) => {
     const params = useParams();
-    const navigate = useNavigate();
 
-    if(!props.userList.users) {
+    if(!props.questions[params.id]) {
         return <Navigate replace={true} to='/404' />
     }
 
-    let answerList = Object.keys(props.userList.users[props.authedUser].answers);
+    let answerList = props.users[props.authedUser].answers;
     
-    const question = props.questions.questions[params.id];
+    const question = props.questions[params.id];
 
     const {
         author,
@@ -33,7 +31,6 @@ const Poll = (props) => {
             answer: optionText,
         })
         );
-     navigate("/home");
     }
 
     const totalVotes = optionOne.votes.length + optionTwo.votes.length;
@@ -43,12 +40,12 @@ const Poll = (props) => {
             <Nav></Nav>
             <div>
                 <h3>Poll by {author}</h3>
-                <img src={props.userList.users[author].avatarURL} />
+                <img src={props.users[author].avatarURL} />
                 <h3>Would you rather</h3>
 
                 <div>{optionOne.text}
                 <br />
-                <button disabled={answerList.includes(params.id)} onClick={(e) => selectPoll(e, 'optionOne')}>Click</button>
+                <button disabled={Object.keys(answerList).includes(params.id)} onClick={(e) => selectPoll(e, 'optionOne')}>{answerList[params.id] === 'optionOne'? 'Option user choosen' : 'click'}</button>
                 <br />
                 <p>Number people voted: {optionOne.votes.length}</p>
                 {optionOne.votes.length !== 0 && totalVotes !== 0 ? <p>Percentage people voted: {Math.round((optionOne.votes.length / totalVotes) * 100)} %</p> : <p>Percentage people voted: 0%</p>}
@@ -56,7 +53,7 @@ const Poll = (props) => {
                 <p> ------------------------------------------------------------------------------------</p>
                 <div>{optionTwo.text}
                 <br />
-                <button disabled={answerList.includes(params.id)} onClick={(e) => selectPoll(e, 'optionTwo')}>Click</button>
+                <button disabled={Object.keys(answerList).includes(params.id)} onClick={(e) => selectPoll(e, 'optionTwo')}>{answerList[params.id] === 'optionTwo'? 'Option user choosen' : 'click'}</button>
                 <br />
                 <p>Number people voted: {optionTwo.votes.length}</p>
                 {optionTwo.votes.length !== 0 && totalVotes !== 0 ? <p>Percentage people voted: {Math.round((optionTwo.votes.length / totalVotes) * 100)} %</p> : <p>Percentage people voted: 0%</p>}
@@ -69,8 +66,8 @@ const Poll = (props) => {
 const mapStateToProps = ({ authedUser, questions, users }) => {
     return {
       authedUser,
-      questions: questions,
-      userList: users,
+      questions,
+      users,
     };
   };
   

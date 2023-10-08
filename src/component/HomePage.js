@@ -1,6 +1,6 @@
 
 import { connect } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState  } from "react";
 import { handleInitialData } from "../actions/shared"
 import {formatDate} from "../utils/helpers"
 import { useNavigate } from "react-router-dom";
@@ -9,16 +9,24 @@ import Nav from "./Nav";
 
 const HomePage = (props) => {
     const navigate = useNavigate();
+    const [isToggleNewQuestion, setIsToggleNewQuestion] = useState(true);
+
+    const toggleChange = ()=>{
+        setIsToggleNewQuestion(!isToggleNewQuestion)
+        if (isToggleNewQuestion) {
+
+        }
+      }
 
     useEffect(() => {
         props.dispatch(handleInitialData());
       }, []);
 
-      let answerList = Object.keys(props.userList.users[props.authedUser].answers);
+      let answerList = Object.keys(props.users[props.authedUser].answers);
 
       const resultFilter = {
-        unanswerList:  Object.values(props.questionList.questions).filter(questions => !answerList.includes(questions.id)),
-        answerList:  Object.values(props.questionList.questions).filter(questions => answerList.includes(questions.id)),
+        unanswerList:  Object.values(props.questions).filter(questions => !answerList.includes(questions.id)),
+        answerList:  Object.values(props.questions).filter(questions => answerList.includes(questions.id)),
       };
 
     const showDetailPoll = (e, id) => {
@@ -29,7 +37,30 @@ const HomePage = (props) => {
     return (
         <Fragment>
             <Nav></Nav>
+
+            <h1>Choose question categories </h1>
             <div>
+            <input
+                type="radio"
+                value={true}
+                name="newQuestion"
+                checked={isToggleNewQuestion}
+                onChange={toggleChange}
+            />
+            <label>New question </label>
+            <input
+                type="radio"
+                value={false}
+                name="Done"
+                checked={!isToggleNewQuestion}
+                onChange={toggleChange}
+            />
+            <label>Done </label>
+            </div>
+
+            <div>
+                {
+                    isToggleNewQuestion ? (
                         <div>
                             <h3>New Questions</h3>
                             <ul>
@@ -42,7 +73,8 @@ const HomePage = (props) => {
                                 ))}
                             </ul>
                         </div>
-
+                    ) : 
+                    (
                         <div>
                             <h3>Done</h3>
                             <ul>
@@ -55,6 +87,8 @@ const HomePage = (props) => {
                                 ))}
                             </ul>
                         </div>
+                    )
+                }
                     </div>
             </Fragment>
     );
@@ -63,9 +97,9 @@ const HomePage = (props) => {
 
 function mapStateToProps(state) {
     const { users, questions, authedUser } = state;
-    return { userList: users,
-             questionList: questions,
-             authedUser: authedUser, }
+    return { users,
+             questions,
+             authedUser, }
 } 
 
 export default connect(mapStateToProps)(HomePage);
