@@ -1,10 +1,14 @@
-# Getting Started with Create React App
+# Getting Started with clone the project from gitHub
+https://github.com/leQuan25/udacity_React_final.git
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+To install dependencies
 
 ### `npm start`
 

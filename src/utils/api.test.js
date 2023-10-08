@@ -1,4 +1,8 @@
-import { saveQuestion, saveQuestionAnswer } from "../utils/api"
+import {
+    _saveQuestion,
+    _saveQuestionAnswer
+  } from './_DATA.js'
+
 
 describe('saveQuestion', () => {
     it('Will return question if the question input have enough information', async() => {
@@ -7,7 +11,7 @@ describe('saveQuestion', () => {
             optionTwoText: 'optionTwoText',
             author: 'sarahedo',
           };
-        var result = await saveQuestion(question);
+        var result = await _saveQuestion(question);
         expect(result.author).toEqual('sarahedo');
         expect(result.optionOne.text).toEqual('optionOneText');
         expect(result.optionTwo.text).toEqual('optionTwoText');
@@ -17,7 +21,7 @@ describe('saveQuestion', () => {
         var question = {
             author: 'authedUser',
           };
-        await expect(saveQuestion(question)).rejects.toEqual('Please provide optionOneText, optionTwoText, and author');
+        await expect(_saveQuestion(question)).rejects.toEqual('Please provide optionOneText, optionTwoText, and author');
     });
 
 });
@@ -30,7 +34,7 @@ describe('saveQuestionAnswer', () => {
             authedUser: 'sarahedo',
             answer: 'optionOne',
         };
-        var result = await saveQuestionAnswer(questionAnswer);
+        var result = await _saveQuestionAnswer(questionAnswer);
         expect(result).toEqual(true);
     });
 
@@ -38,7 +42,7 @@ describe('saveQuestionAnswer', () => {
         var questionAnswer = {
             authedUser: 'authedUser',
           };
-        await expect(saveQuestionAnswer(questionAnswer)).rejects.toEqual('Please provide authedUser, qid, and answer');
+        await expect(_saveQuestionAnswer(questionAnswer)).rejects.toEqual('Please provide authedUser, qid, and answer');
     });
 
 });

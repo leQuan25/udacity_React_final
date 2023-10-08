@@ -6,6 +6,55 @@ Object {
   "baseElement": <body>
     <div>
       <div>
+        <nav
+          class="navbar"
+        >
+          <ul>
+            <li
+              class="navitem"
+            >
+              <a
+                href="/home"
+              >
+                Home
+              </a>
+            </li>
+            <li
+              class="navitem"
+            >
+              <a
+                href="/leaderboard"
+              >
+                Leaderboard
+              </a>
+            </li>
+            <li
+              class="navitem"
+            >
+              <a
+                href="/new"
+              >
+                New
+              </a>
+            </li>
+            <ul
+              class="navbar-right"
+            >
+              <li
+                class="navitem"
+              />
+              <li
+                class="navitem"
+              >
+                <a
+                  href="/"
+                >
+                   Logout 
+                </a>
+              </li>
+            </ul>
+          </ul>
+        </nav>
         <p>
           404 Page not found
         </p>
@@ -14,6 +63,55 @@ Object {
   </body>,
   "container": <div>
     <div>
+      <nav
+        class="navbar"
+      >
+        <ul>
+          <li
+            class="navitem"
+          >
+            <a
+              href="/home"
+            >
+              Home
+            </a>
+          </li>
+          <li
+            class="navitem"
+          >
+            <a
+              href="/leaderboard"
+            >
+              Leaderboard
+            </a>
+          </li>
+          <li
+            class="navitem"
+          >
+            <a
+              href="/new"
+            >
+              New
+            </a>
+          </li>
+          <ul
+            class="navbar-right"
+          >
+            <li
+              class="navitem"
+            />
+            <li
+              class="navitem"
+            >
+              <a
+                href="/"
+              >
+                 Logout 
+              </a>
+            </li>
+          </ul>
+        </ul>
+      </nav>
       <p>
         404 Page not found
       </p>
